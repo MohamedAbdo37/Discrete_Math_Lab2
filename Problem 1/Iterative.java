@@ -16,6 +16,13 @@ public class Iterative {
     }
 
     private static String Power(String[] set) {
+        
+        if(set.length == 0 )
+            return "{ }" ;
+
+        if(set.length == 1 & set[0] == "")
+            return "{ }" ;
+            
         String result = "";
         for(int i : sequnce(set.length)){
             result += "{";
