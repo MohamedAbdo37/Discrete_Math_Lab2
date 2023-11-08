@@ -5,6 +5,22 @@ import java.util.Scanner;
 
 public class Recursive {
 
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        // reading set
+        System.out.print("Enter your set: ");
+        String input = scanner.nextLine().replace("{", "");
+        input = input.replace("}", "");
+        input = input.replace(",", "");
+        String[] inputArr = input.split(" ");
+
+        System.out.print("Power set is : {");
+        powerSetPrinting(inputArr, 0);
+        System.out.print("}");
+        
+        scanner.close();
+    }
+    
     // funtion for getting the bit value getBit()
     public static int getBit(int number, int position) {
         number = number >> position; // shifting the required bit to be the least significant bit
@@ -53,21 +69,5 @@ public class Recursive {
             System.out.print(", ");
         powerSetPrinting(set, ++num);
 
-    }
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        // reading set
-        System.out.print("Enter your set: ");
-        String input = scanner.nextLine().replace("{", "");
-        input = input.replace("}", "");
-        input = input.replace(",", "");
-        String[] inputArr = input.split(" ");
-
-        System.out.print("Power set is : {");
-        powerSetPrinting(inputArr, 0);
-        System.out.print("}");
-        
-        scanner.close();
     }
 }
