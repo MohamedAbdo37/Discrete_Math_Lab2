@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class Expression implements IFExpression {
@@ -6,6 +6,7 @@ public class Expression implements IFExpression {
     String[] valuesArray;
     public String expression;
     private String prefex;
+    protected char[] operands;
 
     // constractor
     public Expression(String representation, String[] values) {
@@ -13,11 +14,69 @@ public class Expression implements IFExpression {
         this.expression = representation;
         this.prefex = this.getRepresentation();
         this.setRepresentation(this.prefex);
+        this.operands = this.getOperands();
+    }
+
+    public Expression(String representation) {
+        this.expression = representation;
+        this.operands = this.getOperands();
+        this.valuesArray = this.addValues(0);
+        this.prefex = this.getRepresentation();
+        this.setRepresentation(this.prefex);
+    }
+
+    public Expression(Expression exp, char[] ops){
+        this.expression = exp.expression;
+
+        for (int i = 0; i < ops.length; i++) 
+            this.expression.replaceAll(String.valueOf(ops[i]), String.valueOf(exp.operands[i]));
+        this.operands = ops;
+        this.valuesArray = addValues(0);
+        this.prefex = this.getRepresentation();
+        this.setRepresentation(this.prefex);
+    }
+
+    public String[] addValues(int i) {
+        String[] values = new String[this.operands.length];
+        for (int j = 0 ; j < this.operands.length; j++) {
+            values[j] = this.operands[j] + String.valueOf(((i & 1) == 1));
+            i = i >> 1;
+        }
+        return values;
+    }
+
+    private char[] getOperands() {
+        ArrayList<Character> ops = new ArrayList<>();
+        for (char c : this.expression.toCharArray()) {
+            switch(c){
+                case '~':
+                    break;
+                case '^':
+                    break;
+                case 'v':
+                    break;
+                case '>':
+                    break;
+                case ')':
+                    break;
+                case '(':
+                    break;
+                default:
+                    if(!ops.contains(c))
+                        ops.add(c);
+            }
+        }
+        char[] res = new char[ops.size()];
+        for (int i = 0; i < res.length; i++) {
+            res[i] = ops.get(i);
+        }
+        return res;
     }
 
     public String getPrefex(){
         return this.prefex;
     }
+    
     @Override
     public String getRepresentation() {
 
