@@ -1,74 +1,23 @@
-import java.util.ArrayList;
+
 import java.util.Stack;
 
 public class Expression implements IFExpression {
 
-    private String[] valuesArray;
+    String[] valuesArray;
     public String expression;
-    protected char[] operands;
+    private String prefex;
 
     // constractor
     public Expression(String representation, String[] values) {
         this.valuesArray = values;
         this.expression = representation;
-        this.operands = this.getOperands();
+        this.prefex = this.getRepresentation();
+        this.setRepresentation(this.prefex);
     }
 
-    public Expression(String representation) {
-        this.expression = representation;
-        this.operands = this.getOperands();
-        this.valuesArray = this.addValues(0);
+    public String getPrefex(){
+        return this.prefex;
     }
-
-    public Expression(Expression exp, char[] ops){
-        this.expression = exp.expression;
-
-        for (int i = 0; i < ops.length; i++) 
-            this.expression.replaceAll(String.valueOf(ops[i]), String.valueOf(exp.operands[i]));
-        this.operands = ops;
-        this.valuesArray = addValues(0);
-    }
-    
-
-    public String[] addValues(int i) {
-        String[] values = new String[this.operands.length];
-        for (int j = 0 ; j < this.operands.length; j++) {
-            values[j] = this.operands[j] + String.valueOf(((i & 1) == 1));
-            i = i >> 1;
-        }
-        return values;
-    }
-
-    private char[] getOperands() {
-
-        ArrayList<Character> ops = new ArrayList<>();
-        for (char c : this.expression.toCharArray()) {
-            switch(c){
-                case '~':
-                    break;
-                case '^':
-                    break;
-                case 'v':
-                    break;
-                case '>':
-                    break;
-                case ')':
-                    break;
-                case '(':
-                    break;
-                default:
-                    if(!ops.contains(c))
-                        ops.add(c);
-            }
-        }
-
-        char[] res = new char[ops.size()];
-        for (int i = 0; i < res.length; i++) {
-            res[i] = ops.get(i);
-        }
-        return res;
-    }
-
     @Override
     public String getRepresentation() {
 
@@ -156,7 +105,7 @@ public class Expression implements IFExpression {
         for (int j = 0; j < size; j++) {
             res += stack.pop();
         }
-
+        
         return res;
     }
 
@@ -166,13 +115,13 @@ public class Expression implements IFExpression {
         for (int i = 0; i < representation.length(); i++) {
             if (getValueOfOperand(this.valuesArray, representation.charAt(i)) == 1) {
                 replace = representation.charAt(i);
-                this.expression = representation.replace(replace, 't');
-                representation = this.expression;
+                this.prefex = representation.replace(replace, 't');
+                // representation = this.expression;
 
             } else if (getValueOfOperand(this.valuesArray, representation.charAt(i)) == 0) {
                 replace = representation.charAt(i);
-                this.expression = representation.replace(replace, 'f');
-                representation = this.expression;
+                this.prefex = representation.replace(replace, 'f');
+                // representation = this.expression;
             }
         }
     }
