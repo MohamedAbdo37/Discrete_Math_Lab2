@@ -4,11 +4,13 @@ public class Expression implements IFExpression {
 
     String[] valuesArray;
     public String expression;
-
+    private String prefex;
     // constractor
     public Expression(String representation, String[] values) {
         this.valuesArray = values;
         this.expression = representation;
+        this.prefex = this.getRepresentation();
+        this.setRepresentation(this.prefex);
     }
 
     @Override
@@ -98,7 +100,7 @@ public class Expression implements IFExpression {
         for (int j = 0; j < size; j++) {
             res += stack.pop();
         }
-
+        
         return res;
     }
 
