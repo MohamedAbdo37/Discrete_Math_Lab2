@@ -20,7 +20,7 @@ public class Expression implements IFExpression {
     public Expression(String representation) {
         this.expression = representation;
         this.operands = this.getOperands();
-        this.valuesArray = this.addValues(0);
+        this.valuesArray = this.addValuesIn(0);
         this.prefex = this.getRepresentation();
         this.setRepresentation(this.prefex);
     }
@@ -29,20 +29,26 @@ public class Expression implements IFExpression {
         this.expression = exp.expression;
 
         for (int i = 0; i < ops.length; i++) 
-            this.expression.replaceAll(String.valueOf(ops[i]), String.valueOf(exp.operands[i]));
+            this.expression = this.expression.replaceAll(String.valueOf(exp.operands[i]),String.valueOf(ops[i]));
         this.operands = ops;
-        this.valuesArray = addValues(0);
+        this.valuesArray = addValuesIn(0);
         this.prefex = this.getRepresentation();
         this.setRepresentation(this.prefex);
     }
 
-    public String[] addValues(int i) {
+    private String[] addValuesIn(int i) {
         String[] values = new String[this.operands.length];
         for (int j = 0 ; j < this.operands.length; j++) {
             values[j] = this.operands[j] + String.valueOf(((i & 1) == 1));
             i = i >> 1;
         }
         return values;
+    }
+
+    public void addValues(int i) {
+        this.valuesArray = this.addValuesIn(i);
+        this.prefex = this.getRepresentation();
+        this.setRepresentation(this.prefex);
     }
 
     private char[] getOperands() {
@@ -171,18 +177,20 @@ public class Expression implements IFExpression {
     @Override
     public void setRepresentation(String representation) {
         char replace;
+        String temp = representation;
         for (int i = 0; i < representation.length(); i++) {
             if (getValueOfOperand(this.valuesArray, representation.charAt(i)) == 1) {
                 replace = representation.charAt(i);
-                this.prefex = representation.replace(replace, 't');
+                temp = temp.replace(replace, 't');
                 // representation = this.expression;
 
             } else if (getValueOfOperand(this.valuesArray, representation.charAt(i)) == 0) {
                 replace = representation.charAt(i);
-                this.prefex = representation.replace(replace, 'f');
+                temp = temp.replace(replace, 'f');
                 // representation = this.expression;
             }
         }
+        this.prefex = temp;
     }
 
 

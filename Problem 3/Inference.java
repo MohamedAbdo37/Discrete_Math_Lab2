@@ -46,11 +46,15 @@ public class Inference implements IFInferenceEngine, IFInferenceRule {
 
     private char[] getOp(Expression exp1, Expression exp2) {
         ArrayList<Character> ops = new ArrayList<>();
-        for (char c : exp1.operands)
-            ops.add(c);
-        for (char c : exp2.operands)
-            if(ops.contains(c)) ops.remove(c);
-            else ops.add(c);
+
+        for (int index = 0; index < exp1.operands.length; index++) {
+            ops.add(exp1.operands[index]);
+        }
+        
+        for (int index = 0; index < exp2.operands.length; index++) {
+            if(ops.contains(exp2.operands[index])) ops.remove(Character.valueOf(exp2.operands[index]));
+            else ops.add(exp2.operands[index]);
+        }
         
         char[] res = new char[ops.size()];
         for (int i = 0; i < res.length; i++)

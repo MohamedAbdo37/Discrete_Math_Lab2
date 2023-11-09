@@ -110,18 +110,24 @@ public class Expression implements IFExpression {
     @Override
     public void setRepresentation(String representation) {
         char replace;
+        String temp = representation;
         for (int i = 0; i < representation.length(); i++) {
             if (getValueOfOperand(this.valuesArray, representation.charAt(i)) == 1) {
                 replace = representation.charAt(i);
-                this.prefex = representation.replace(replace, 't');
+                temp = temp.replace(replace, 't');
+                // pre = tY^    rep = XY^
                 // representation = this.expression;
 
             } else if (getValueOfOperand(this.valuesArray, representation.charAt(i)) == 0) {
                 replace = representation.charAt(i);
-                this.prefex = representation.replace(replace, 'f');
+                // pre = tY^    rep = XY^
+                temp = temp.replace(replace, 'f');
+                // pre = Xf^    rep = XY^
                 // representation = this.expression;
             }
         }
+
+        this.prefex = temp;
     }
 
 
