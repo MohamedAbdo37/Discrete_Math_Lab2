@@ -33,7 +33,7 @@ public class Expression implements IFExpression {
     public String[] addValues(int i) {
         String[] values = new String[this.operands.length];
         for (int j = 0 ; j < this.operands.length; j++) {
-            values[j] = this.operands[j] + String.valueOf(i & 1);
+            values[j] = this.operands[j] + String.valueOf(((i & 1) == 1));
             i = i >> 1;
         }
         return values;
