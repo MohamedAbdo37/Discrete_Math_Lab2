@@ -11,7 +11,7 @@ public class Main {
         // reading expression
         System.out.println("Enter expression: ");
         String input = scanner.nextLine();
-        String res = new String();
+        // String res = new String();
 
         // Reading values
         String values = scanner.nextLine().replace(" ", "");// reading values string and removing spaces
@@ -43,8 +43,10 @@ public class Main {
             boolResult = logicStatement.evaluateExpression(expression);
         } catch (Exception e) {
             System.out.println("Wrong expression");
+            scanner.close();
             return;
         }
         System.out.println(boolResult);
+        scanner.close();
     }
 }
