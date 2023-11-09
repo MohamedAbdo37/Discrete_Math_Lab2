@@ -23,17 +23,17 @@ public class Main {
 
         // getting representation
         // try {
-        //     res = expression.getRepresentation();
+        // res = expression.getRepresentation();
         // } catch (Exception e) {
-        //     System.out.println("Wrong expression");
-        //     return;
+        // System.out.println("Wrong expression");
+        // return;
         // }
         // // parsing opperand values in the expression representation
         // try {
-        //     expression.setRepresentation(res);
+        // expression.setRepresentation(res);
         // } catch (Exception e) {
-        //     System.out.println("Wrong expression");
-        //     return;
+        // System.out.println("Wrong expression");
+        // return;
         // }
 
         LogicalExpressionSolver logicStatement = new LogicalExpressionSolver();
