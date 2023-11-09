@@ -22,19 +22,19 @@ public class Main {
         Expression expression = new Expression(input, valuesArray);
 
         // getting representation
-        try {
-            res = expression.getRepresentation();
-        } catch (Exception e) {
-            System.out.println("Wrong expression");
-            return;
-        }
-        // parsing opperand values in the expression representation
-        try {
-            expression.setRepresentation(res);
-        } catch (Exception e) {
-            System.out.println("Wrong expression");
-            return;
-        }
+        // try {
+        //     res = expression.getRepresentation();
+        // } catch (Exception e) {
+        //     System.out.println("Wrong expression");
+        //     return;
+        // }
+        // // parsing opperand values in the expression representation
+        // try {
+        //     expression.setRepresentation(res);
+        // } catch (Exception e) {
+        //     System.out.println("Wrong expression");
+        //     return;
+        // }
 
         LogicalExpressionSolver logicStatement = new LogicalExpressionSolver();
         // estimamting result
