@@ -13,6 +13,9 @@ public class Expression implements IFExpression {
         this.setRepresentation(this.prefex);
     }
 
+    public String getPrefex(){
+        return this.prefex;
+    }
     @Override
     public String getRepresentation() {
 
