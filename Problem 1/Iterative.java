@@ -6,11 +6,28 @@ public class Iterative {
         
         System.out.println("Enter Set Elements: ");
         System.out.println("ex:{1,2,A,#}");
-        String[] ele = scan.nextLine().replace( "{", "").replace( "}", "").split(",");
+        String input = scan.nextLine();
+        
+        if( input.length() <= 2 ){
+            System.out.println("Wrong input");
+            System.exit(0);
+        }
+
+        if(input.charAt(0) != '{'){
+            System.out.println("Wrong input");
+            System.exit(0);
+        }
+
+        if(input.charAt(input.length()-1) != '}'){
+            System.out.println("Wrong input");
+            System.exit(0);
+        }
+
+
+        String[] ele = input.replace( "{", "").replace( "}", "").replace(" ", "").split(",");
         
         System.out.print("Power function = \n{ ");
         System.out.println(Power(ele) + " }");
-
         scan.close();
 
     }
