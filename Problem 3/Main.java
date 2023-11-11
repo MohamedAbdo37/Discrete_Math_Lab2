@@ -19,7 +19,11 @@ public class Main{
         }
 
         System.out.println("Result:");
-        System.out.println(new Inference().apply(exp1, exp2).expression);
+        Expression res = new Inference().apply(exp1, exp2);
+        if(res == null)
+            System.out.println("No Result");
+        else
+            System.out.println(res.expression);
 
         scan.close();
     }

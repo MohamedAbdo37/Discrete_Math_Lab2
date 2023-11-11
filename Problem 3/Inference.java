@@ -3,13 +3,16 @@ import java.util.ArrayList;
 public class Inference implements IFInferenceEngine, IFInferenceRule {
 
     ArrayList<Expression> exps = new ArrayList<>() ;
-    ArrayList<Rule> rules = new ArrayList<>() ;
 
     @Override
     public boolean matches(Expression exp1, Expression exp2) {
         LogicalExpressionSolver logic = new LogicalExpressionSolver();
-        if ( exp1.operands.length != exp2.operands.length) return false;
-        for(int i = 0 ; i < exp1.operands.length; i++){
+        int l = 0;
+        if ( exp1.operands.length != exp2.operands.length) 
+            l = exp1.operands.length + exp2.operands.length;
+        else
+            l = exp1.operands.length;
+        for(int i = 0 ; i < l; i++){
             exp1.addValues(i);
             exp2.addValues(i);
             if(logic.evaluateExpression(exp1) != logic.evaluateExpression(exp2))
@@ -38,10 +41,23 @@ public class Inference implements IFInferenceEngine, IFInferenceRule {
             if(matches(exp2, Rule.rules.get(i).firstOp))
                 if(matches(exp1, Rule.rules.get(i).secondOp)){
                     r = new Expression(Rule.rules.get(i).result, getOp(exp2,exp1));
+                    match = true;
                 }
         }
+        
+        if(match == false)
+            return null;
+        else {
+            r = Rule.getResult(r);
+            Expression o = new Expression("~PvP");
+            Expression s = new Expression("(("+exp1.expression+")^"+exp2.expression+")>"+r.expression);
+            match = matches(o,s);
+        }
 
-        return Rule.getResult(r);
+        if(match == true)
+            return r;
+        else
+            return null;
     }
 
     private char[] getOp(Expression exp1, Expression exp2) {
@@ -65,8 +81,7 @@ public class Inference implements IFInferenceEngine, IFInferenceRule {
 
     @Override
     public void addRule(IFInferenceRule rule) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addRule'");
+        Rule.rules.add((Rule) rule);
     }
 
     @Override
@@ -76,8 +91,13 @@ public class Inference implements IFInferenceEngine, IFInferenceRule {
 
     @Override
     public Expression applyRules() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'applyRules'");
+        Expression res = this.exps.get(0);
+        for(int i = 1; i < Rule.rules.size(); i++){
+            Expression exp = this.exps.get(i);
+            res = apply(res, exp);
+        }
+
+        return res;
     }
     
 }

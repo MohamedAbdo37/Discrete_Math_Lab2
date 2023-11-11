@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 // import java.util.Stack;
 
-public class Rule extends Inference {
+public class Rule implements IFInferenceRule {
     Expression firstOp;
     Expression secondOp;
     Expression result;
@@ -49,24 +49,8 @@ public class Rule extends Inference {
         return new Expression(and, ops);
     }
 
-    @Override
-    public void addRule(IFInferenceRule rule) {
-        rules.add((Rule) rule);
-    }
-
-    @Override
-    public void addExpression(Expression exp) {
-        
-    }
-
-    @Override
-    public Expression applyRules() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'applyRules'");
-    }
-
     public static Expression getResult(Expression r) {
-        Inference i = new Rule();
+        Rule i = new Rule();
         if(i.matches(r, imples))
             return imples(r.operands);
         if(i.matches(r, direct))
@@ -79,5 +63,17 @@ public class Rule extends Inference {
             return And(r.operands);
 
         return null;
+    }
+
+    @Override
+    public boolean matches(Expression exp1, Expression exp2) {
+        Inference i = new Inference();
+        return i.matches(exp1, exp2);
+    }
+
+    @Override
+    public Expression apply(Expression exp1, Expression exp2) {
+        Inference i = new Inference();
+        return i.apply(exp1, exp2);
     }
 }

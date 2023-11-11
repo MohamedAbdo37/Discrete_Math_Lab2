@@ -16,15 +16,34 @@ public class Iterative {
         if(input.charAt(0) != '{'){
             System.out.println("Wrong input");
             System.exit(0);
+        }else{
+            char[] c = input.toCharArray();
+            c[0] = 0;
+            input = String.valueOf(c);
         }
 
         if(input.charAt(input.length()-1) != '}'){
             System.out.println("Wrong input");
             System.exit(0);
         }
+        else{
+            char[] c = input.toCharArray();
+            c[c.length-1] = 0;
+            input = String.valueOf(c);
+        }
 
+        for(char c : input.toCharArray() ){
+            if(c == '{'){
+                System.out.println("Wrong input");
+                System.exit(0);
+            }
+            if(c == '}'){
+                System.out.println("Wrong input");
+                System.exit(0);
+            }
+        }
 
-        String[] ele = input.replace( "{", "").replace( "}", "").replace(" ", "").split(",");
+        String[] ele = input.replace(" ", "").split(",");
         
         System.out.print("Power function = \n{ ");
         System.out.println(Power(ele) + " }");
