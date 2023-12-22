@@ -1,2 +1,2 @@
-# Discrete_Math_Lab2
-Discrete Math Lab 2
+# Discrete_Math_Lab4
+Discrete Math Lab 4
