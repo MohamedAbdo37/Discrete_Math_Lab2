@@ -1,3 +1,4 @@
+import java.nio.channels.NoConnectionPendingException;
 import java.util.*;
 
 public class Dijkstra {
@@ -31,6 +32,8 @@ public class Dijkstra {
         Arrays.fill(shortestPath, infinity);
         // setting all nodes unvisited
         Arrays.fill(visitied, false);
+        // setting all previous nodes empty
+        Arrays.fill(previousNode, -1);
         shortestPath[start] = 0;
         for (int i = 0; i < adjacentcyMatrex.length; i++) {
             start = getSmallestUnvisitedNode(shortestPath);
@@ -47,10 +50,14 @@ public class Dijkstra {
     }
 
     public Object[] getShortestPath(int start, int end) {
+
         List<Integer> path = new ArrayList<>();
         path.add(end);
         int temp = end;
         while (temp != start) {
+            if (previousNode[temp] == -1) {
+                throw new NoConnectionPendingException();
+            }
             path.add(previousNode[temp]);
             temp = path.get(path.size() - 1);
         }

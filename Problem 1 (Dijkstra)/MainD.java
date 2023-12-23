@@ -48,7 +48,14 @@ public class MainD {
         System.out.println("The distance for each flight (in miles)");
         for (int i = 0; i < Edges.length; i++) {
             System.out.print(Edges[i] + ": ");
-            costs[i] = sc.nextInt();
+            try {
+                costs[i] = sc.nextInt();
+            } catch (Exception InputMismatchException) {
+                System.out.println("Error: distance should be rounded to the nearst integer");
+                --i;
+                sc.nextLine();
+                continue;
+            }
             if (costs[i] <= 0) {
                 System.out.println("Error: There is no zero or negative distance");
                 --i;
@@ -58,7 +65,8 @@ public class MainD {
         try {
             adjacencyMatrix.createAdMat();
         } catch (Exception InvalidKeyException) {
-            System.out.println("Error: Unfound route");
+            System.out.println("Error: Unfound airport");
+            return;
         }
 
         sc.nextLine();
@@ -87,7 +95,13 @@ public class MainD {
 
         // printing shortest path
         System.out.print("Shortest path from " + startString + " to " + endString + ": ");
-        Object[] shortestPath = dijkstra.getShortestPath(start, end);
+        Object[] shortestPath;
+        try {
+            shortestPath = dijkstra.getShortestPath(start, end);
+        } catch (Exception NoConnectionPendingException) {
+            System.out.println("path not found");
+            return;
+        }
         for (int i = 0; i < shortestPath.length; i++) {
             System.out.print(Nodes[(int) shortestPath[i]]);
             if (i != shortestPath.length - 1)
