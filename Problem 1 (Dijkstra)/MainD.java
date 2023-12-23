@@ -2,6 +2,15 @@ import java.security.InvalidKeyException;
 import java.util.Scanner;
 
 public class MainD {
+
+    public static int searchForNode(String[] Nodes, String node) {
+        for (int i = 0; i < Nodes.length; i++) {
+            if (Nodes[i].equals(node))
+                return i;
+        }
+        return -1;
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         // reading nodes (airports)
@@ -52,11 +61,42 @@ public class MainD {
             System.out.println("Error: Unfound route");
         }
 
-        // for (int i = 0; i < Nodes.length; i++) {
-        // for (int j = 0; j < Nodes.length; j++) {
-        // System.out.print(adjacencyMatrix.adjacentcyMatrex[i][j] + " ");
-        // }
-        // System.out.println();
-        // }
+        sc.nextLine();
+
+        // reading start node
+        System.out.print("Enter source airport: ");
+        String startString = sc.nextLine();
+        int start = searchForNode(Nodes, startString);
+        if (start == -1) {
+            System.out.println("Error: unfound source");
+            return;
+        }
+
+        // reading destination node
+        System.out.print("Enter destination airport: ");
+        String endString = sc.nextLine();
+        int end = searchForNode(Nodes, endString);
+        if (end == -1) {
+            System.out.println("Error: unfound destination");
+            return;
+        }
+
+        // creat dijkstra shortest path table from start node given by the user
+        Dijkstra dijkstra = new Dijkstra(adjacencyMatrix.adjacentcyMatrex);
+        dijkstra.setShortestPathVector(start);
+
+        // printing shortest path
+        System.out.print("Shortest path from " + startString + " to " + endString + ": ");
+        Object[] shortestPath = dijkstra.getShortestPath(start, end);
+        for (int i = 0; i < shortestPath.length; i++) {
+            System.out.print(Nodes[(int) shortestPath[i]]);
+            if (i != shortestPath.length - 1)
+                System.out.print(" - ");
+        }
+        System.out.println();
+        // printing total distance
+        System.out.print("Total distance: ");
+        System.out.print(dijkstra.shortestPath[end] + " miles");
+
     }
 }
