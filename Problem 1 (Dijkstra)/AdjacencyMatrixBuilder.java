@@ -1,4 +1,5 @@
 import java.security.InvalidKeyException;
+import java.util.Arrays;
 
 public class AdjacencyMatrixBuilder {
     private String[] Nodes;
@@ -10,6 +11,14 @@ public class AdjacencyMatrixBuilder {
         this.Nodes = Nodes;
         this.Edges = Edges;
         this.Costs = costs;
+        adjacentcyMatrex = new int[Nodes.length][Nodes.length];
+    }
+
+    public AdjacencyMatrixBuilder(String[] Nodes, String[] Edges) {
+        this.Nodes = Nodes;
+        this.Edges = Edges;
+        this.Costs = new int[Edges.length];
+        Arrays.fill(this.Costs, 1);
         adjacentcyMatrex = new int[Nodes.length][Nodes.length];
     }
 

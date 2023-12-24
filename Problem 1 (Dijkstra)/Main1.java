@@ -1,8 +1,26 @@
 import java.security.InvalidKeyException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main1 {
+    // function for removing repeated nodes
+    public static String[] removeRepetition(String[] nodes) {
+        List<String> nodesCopy = new ArrayList<>();
+        for (int i = 0; i < nodes.length; i++) {
+            nodesCopy.add(nodes[i]);
+        }
+        for (int i = 0; i < nodes.length; i++) {
+            String temp = nodes[i];
+            for (int j = i + 1; j < nodes.length; j++) {
+                if (temp.equals(nodes[j]))
+                    nodesCopy.remove(j);
+            }
+        }
+        return nodesCopy.toArray(new String[0]);
+    }
 
+    // searching for node in the array of nodes
     public static int searchForNode(String[] Nodes, String node) {
         for (int i = 0; i < Nodes.length; i++) {
             if (Nodes[i].equals(node))
@@ -27,6 +45,9 @@ public class Main1 {
                 return;
             }
         }
+
+        // removing repeated nodes (airports) if found
+        Nodes = removeRepetition(Nodes);
 
         // reading edges (flights)
         System.out.println("Enter the flights: ");
@@ -61,7 +82,10 @@ public class Main1 {
                 --i;
             }
         }
+
+        // creating the adjacency matrix of the graph
         AdjacencyMatrixBuilder adjacencyMatrix = new AdjacencyMatrixBuilder(Nodes, Edges, costs);
+
         try {
             adjacencyMatrix.createAdMat();
         } catch (Exception InvalidKeyException) {
