@@ -1,7 +1,7 @@
 import java.security.InvalidKeyException;
 import java.util.Scanner;
 
-public class MainD {
+public class Main1 {
 
     public static int searchForNode(String[] Nodes, String node) {
         for (int i = 0; i < Nodes.length; i++) {
