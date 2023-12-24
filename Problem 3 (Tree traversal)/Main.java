@@ -22,12 +22,21 @@ class Main {
         }
 
         // adding node to nodes list
-        nodes.add(node);
+        Tree tree = new Tree(node);
         // start loop of children nodes
-        boolean flag = true;
-        while (flag) {
-            System.out.println("Enter left child value of " + nodes.get(nodes.size() - 1) + "(or -1 to skip):");
-            sc.nextInt();
-        }
+        tree.readTree(tree.root);
+        // printing preorder traversal
+        System.out.print("Preorder Traversal: ");
+        tree.preOrderTraversal(tree.root);
+        System.out.println();
+
+        // printing inorder traversal
+        // System.out.print("Inorder Traversal: ");
+        // tree.inOrderTraversal(tree.root);
+        // System.out.println();
+
+        // printing postorder traversal
+        System.out.print("Postorder Traversal: ");
+        tree.postOrderTraversal(tree.root);
     }
 }
